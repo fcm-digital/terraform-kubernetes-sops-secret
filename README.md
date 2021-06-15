@@ -59,7 +59,8 @@ $ sops --encrypt --kms arn:aws:kms:us-east-1:656532927350:key/920aff2e-c5f1-4040
 
 ## Outputs
 
-| Name      | Description        |
-|:----------|:-------------------|
-| name      | Secret's name      |
-| namespace | Secret's namespace |
+| Name      | Description                            |
+|:----------|:---------------------------------------|
+| keys      | List of keys for the Kubernetes secret |
+| name      | Secret's name                          |
+| namespace | Secret's namespace                     |
