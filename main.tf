@@ -31,17 +31,32 @@
  * ```bash
  * $ sops --encrypt --kms arn:aws:kms:us-east-1:656532927350:key/920aff2e-c5f1-4040-943a-047fa387b27e secrets.yaml
  * ```
+ *
+ * ## Setting annotations/labels per namespace
+ *
+ * ```hcl
+ * namespaces = ["staging", "production"]
+ * name = "supersecret"
+ * annotations = {
+ *   all = {
+ *     "this-annotation" = "applies to all namespaces"
+ *   }
+ *   production = {
+ *     "this-annotation" = "only applies to production namespace"
+ *   }
+ * }
  */
 data "sops_file" "secret" {
   source_file = var.file
 }
 
 resource "kubernetes_secret" "secret" {
+  for_each = var.namespaces
   metadata {
-    annotations = var.annotations
-    labels      = var.labels
+    annotations = merge(var.annotations["all"], lookup(var.annotations, each.value, {}))
+    labels      = merge(var.labels["all"], lookup(var.labels, each.value, {}))
     name        = var.name
-    namespace   = var.namespace
+    namespace   = each.value
   }
 
   type = var.type

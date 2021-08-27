@@ -14,20 +14,24 @@ variable "name" {
   description = "Name of the secret"
 }
 
-variable "namespace" {
-  type        = string
+variable "namespaces" {
+  type        = set(string)
   description = "Namespace to create the secret"
-  default     = "default"
+  default     = ["default"]
 }
 
 variable "labels" {
-  type        = map(string)
+  type        = map(map(string))
   description = "Labels for the secret"
-  default     = {}
+  default = {
+    all = {}
+  }
 }
 
 variable "annotations" {
-  type        = map(string)
+  type        = map(map(string))
   description = "Annotations for the secret"
-  default     = {}
+  default = {
+    all = {}
+  }
 }

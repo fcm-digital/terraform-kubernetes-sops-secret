@@ -1,11 +1,11 @@
 output "name" {
-  value       = kubernetes_secret.secret.metadata[0].name
+  value       = [for r in kubernetes_secret.secret : r.metadata[0].name][0]
   description = "Secret's name"
 }
 
-output "namespace" {
-  value       = kubernetes_secret.secret.metadata[0].namespace
-  description = "Secret's namespace"
+output "namespaces" {
+  value       = [for r in kubernetes_secret.secret : r.metadata[0].namespace]
+  description = "Secret's namespaces"
 }
 
 /**
@@ -13,6 +13,6 @@ output "namespace" {
  * secret values from another resources
  */
 output "keys" {
-  value       = keys(nonsensitive(kubernetes_secret.secret.data))
+  value       = [for r in kubernetes_secret.secret : keys(nonsensitive(r.data))][0]
   description = "List of keys for the Kubernetes secret"
 }
