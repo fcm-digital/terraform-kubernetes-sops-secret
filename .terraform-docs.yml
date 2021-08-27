@@ -1,0 +1,9 @@
+---
+formatter: markdown table
+
+settings:
+  anchor: false
+  escape: true
+
+output:
+  file: "README.md"
