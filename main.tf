@@ -62,4 +62,6 @@ resource "kubernetes_secret" "secret" {
   type = var.type
 
   data = { for k, v in data.sops_file.secret.data : k => v }
+
+  wait_for_service_account_token = var.wait_for_service_account_token
 }

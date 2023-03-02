@@ -35,3 +35,9 @@ variable "annotations" {
     all = {}
   }
 }
+
+variable "wait_for_service_account_token" {
+  type        = bool
+  default     = false
+  description = "Terraform will wait for the service account token to be created"
+}
